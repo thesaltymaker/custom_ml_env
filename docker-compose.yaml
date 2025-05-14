@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  ml-env:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: custom-ml-env:latest
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    volumes:
+      - ./projects:Workspace/projects
+    working_dir: /workspace/projects
+    stdin_open: true
+    tty: true
+
